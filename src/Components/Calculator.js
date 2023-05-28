@@ -2,8 +2,10 @@ import { useState } from "react";
 import { Button } from "./Buttons";
 export const Calculator = () => {
   let newValue = "";
-  let latestOperator = "";
+
   const [displayValue, setDisplayValue] = useState("");
+  const [latestOperator, setLastOperator] = useState("");
+  const [numberset, setNumberSet] = useState("");
   const buttons = [
     {
       className: "ac",
@@ -85,6 +87,8 @@ export const Calculator = () => {
   const operators = ["+", "-", "%", "/", "*"];
 
   const handleClickedButton = (val) => {
+    setNumberSet(displayValue + val);
+
     // console.log("Button clicnked", val);
 
     if (operators.includes(val) && !displayValue.length) {
@@ -104,13 +108,12 @@ export const Calculator = () => {
       return setDisplayValue(newValue);
     }
     if (val === ".") {
+      console.log("my numberset is", numberset);
+      // console.log(latestOperator, "this is the latest operator");
       const lastCharacter = displayValue.slice(-1);
-
-      if (displayValue.includes(".") || !displayValue.length) {
-        console.log("Yes it includes");
-        return;
-      }
-
+      const indexOflastOperator = displayValue.lastIndexOf(latestOperator);
+      console.log("the index of last operator is", indexOflastOperator);
+      if (numberset.includes(".")) return;
       if (displayValue.includes(val) && operators.includes(lastCharacter)) {
         // console.log("yes it includes lastcharacter");
         newValue = displayValue.slice(0, -1);
@@ -118,18 +121,23 @@ export const Calculator = () => {
       }
     }
     if (operators.includes(val)) {
-      latestOperator = val;
+      // latestOperator = val;
+      setNumberSet("");
+      console.log("my new numberset when I clicked operators ", numberset);
+      setLastOperator(val + "");
+      // console.log("display value", displayValue);
+      // console.log("latestoperator is", latestOperator);
       const lastCharacter = displayValue.slice(-1);
-      console.log("latest OPerator", latestOperator);
-      console.log("this is a display value", displayValue);
-      console.log("this is a last character", lastCharacter);
-      console.log("");
+      // console.log("latest OPerator", latestOperator);
+      // console.log("this is a display value", displayValue);
+      // console.log("this is a last character", lastCharacter);
+      // console.log("");
       if (operators.includes(lastCharacter)) {
         // newValue = setDisplayValue(displayValue + val);
         newValue = displayValue.slice(0, -1);
         // newValue = setDisplayValue(newValue + val);
-        console.log("inside loop");
-        console.log(newValue);
+        // console.log("inside loop");
+        // console.log(newValue);
 
         return setDisplayValue(newValue + val);
       }
@@ -137,20 +145,14 @@ export const Calculator = () => {
     if (val === "=") {
       const lastCharacter = displayValue.charAt(displayValue.length - 1);
       if (operators.includes(lastCharacter)) return;
-
       console.log("check", displayValue);
-      if (displayValue)
-        if (displayValue === "0") {
-          return;
-        }
+      if (displayValue === "0") {
+        return;
+      }
       let totalValue = eval(displayValue).toString();
       setDisplayValue(totalValue + 0);
-      //   console.log(displayValue);
-      //   console.log(totalValue);
-      //   console.log(displayValue);
       return setDisplayValue(totalValue + "");
     }
-
     setDisplayValue(displayValue + val);
   };
 
