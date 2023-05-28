@@ -9,7 +9,7 @@ export const Calculator = () => {
   const buttons = [
     {
       className: "ac",
-      label: "ACs",
+      label: "AC",
     },
     {
       className: "c",
@@ -167,3 +167,4 @@ export const Calculator = () => {
     </div>
   );
 };
+// this is for dot function
