@@ -9,7 +9,7 @@ export const Calculator = () => {
   const buttons = [
     {
       className: "ac",
-      label: "AC",
+      label: "ACs",
     },
     {
       className: "c",
@@ -108,17 +108,12 @@ export const Calculator = () => {
       return setDisplayValue(newValue);
     }
     if (val === ".") {
-      console.log("my numberset is", numberset);
-      // console.log(latestOperator, "this is the latest operator");
-      const lastCharacter = displayValue.slice(-1);
+      console.log(displayValue);
       const indexOflastOperator = displayValue.lastIndexOf(latestOperator);
+      const numberAfterLastOperator = displayValue.slice(indexOflastOperator);
       console.log("the index of last operator is", indexOflastOperator);
-      if (numberset.includes(".")) return;
-      if (displayValue.includes(val) && operators.includes(lastCharacter)) {
-        // console.log("yes it includes lastcharacter");
-        newValue = displayValue.slice(0, -1);
-        return setDisplayValue(newValue + val);
-      }
+      if (numberAfterLastOperator.includes(".")) return;
+      if (displayValue.includes(".") && !latestOperator) return;
     }
     if (operators.includes(val)) {
       // latestOperator = val;
